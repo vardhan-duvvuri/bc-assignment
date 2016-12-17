@@ -150,13 +150,16 @@ def place_order_view(request):
     order.user_id = request.user
     order.carts = carts_li
     order.save()
-    from django.core.mail import send_mail
-    from django.conf import settings
-    send_mail('Your Order with ABC',
+    try:
+        from django.core.mail import send_mail
+        from django.conf import settings
+        send_mail('Your Order with ABC',
               'Your Order Places successfully, to view orders go to your orders on website.',
               settings.EMAIL_HOST_USER,
               [request.user.email],
               fail_silently=False)
+    except Exception as e:
+        print(e)
     return HttpResponseRedirect("/")
 
 
