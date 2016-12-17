@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Page</title>
+</head>
+<body>
+    <!-- Display user first name and last name -->
+    <div style="margin-bottom: 20px;">
+        Hello {{request.user.first_name}} {{request.user.last_name}}
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+
+    <!-- Display user link to vire the cart -->
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'view_cart' %}">Click Here </a> to view your cart
+    </div>
+
+    <!-- Display user link to vire the cart -->
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'show_orders' %}">Click Here </a> to view Orders
+    </div>
+    <!-- Display Error/ Info messages -->
+    <div style="margin-bottom: 20px;">
+        {% if i %}
+            {{i}}
+        {% endif %}
+
+        {% if e %}
+            {{e}}
+        {% endif %}
+    </div>
+
+    <!-- Display user all the items available in inventory -->
+    <div style="margin-bottom: 20px; display: -webkit-box;">
+        {% for item in inventory %}
+            <div style="margin-right:10px;">
+                <img height="100px" width="100px" src="{% static 'shop.png' %}" alt="My image"/>
+                <div>{{item.item_name}}({{item.available_count}})</div><br>
+                <a href="{% url 'add_to_cart' item_id=item.id %}"><button id="_add_button">ADD TO CART</button></a>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

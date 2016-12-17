@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Cart</title>
+</head>
+<body>
+    <!-- Display user first name and last name -->
+    <div style="margin-bottom: 20px;">
+        Hello {{request.user.first_name}} {{request.user.last_name}}
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+
+    <!-- Display user link to vire the cart -->
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'login' %}">Click Here </a> to go Home
+    </div>
+
+
+    <!-- Display user all the items available in inventory -->
+    <div style="margin-bottom: 20px;">
+        {% if orders.0 %}
+            <div>
+                <table  border="1">
+                    <thead>
+                        <td>Image</td>
+                        <td>Item</td>
+                        <td>Quantity</td>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>
+                                    <img height="25px" width="25px" src="{% static 'shop.png' %}" alt="My image"/>
+                                </td>
+                                <td>
+                                    {{order.item}}
+                                </td>
+                                <td>
+                                    {{order.quantity}}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        {% else %}
+            No Orders
+        {% endif %}
+    </div>
+</body>
+</html>

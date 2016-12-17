@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Cart</title>
+</head>
+<body>
+    <!-- Display user first name and last name -->
+    <div style="margin-bottom: 20px;">
+        Hello {{request.user.first_name}} {{request.user.last_name}}
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+
+    <!-- Display user link to vire the cart -->
+    <div style="margin-bottom: 20px;">
+        <a href="{% url 'login' %}">Click Here </a> to go Home
+    </div>
+
+
+    <!-- Display user all the items available in inventory -->
+    <div style="margin-bottom: 20px;">
+        {% if carts %}
+            <div>
+                <table  border="1">
+                    <thead>
+                        <td>Image</td>
+                        <td>Item</td>
+                        <td>Quantity</td>
+                        <td></td>
+                    </thead>
+                    <tbody>
+                        {% for cart in carts %}
+                            <tr>
+                                <td>
+                                    <img height="25px" width="25px" src="{% static 'shop.png' %}" alt="My image"/>
+                                </td>
+                                <td>
+                                    {{cart.item.item_name}}
+                                </td>
+                                <td>
+                                    {{cart.quantity}}
+                                </td>
+                                <td>
+                                    <a href="{% url 'delete_from_cart' item_id=cart.id %}"><button id="_delete_button">DELETE FROM CART</button></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <a href="{% url 'place_order' %}"><button>Order</button></a>
+            </div>
+        {% else %}
+            No Items to Display in the Cart
+        {% endif %}
+    </div>
+</body>
+</html>
